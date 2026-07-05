@@ -1,0 +1,22 @@
+"""Training entry for the scaffold split."""
+from __future__ import annotations
+import os, sys
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.abspath(os.path.join(_THIS_DIR, os.pardir))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
+from training._cli import run_from_cli  # noqa: E402
+from training.train_runner import SplitSpec  # noqa: E402
+
+def main():
+    split = SplitSpec(
+        name='scaffold',
+        train_template='train_{split}_{repeat}',
+        valid_template='valid_{split}_{repeat}',
+        test_specs=[('test', 'test_{split}_{repeat}')],
+        n_repeats=5,
+    )
+    run_from_cli(split)
+
+if __name__ == '__main__':
+    main()

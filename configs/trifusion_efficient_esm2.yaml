@@ -1,0 +1,90 @@
+# TriFusion lightweight configuration (ESM2-t6-8M protein tower)
+# 6-set Pearson R = 0.7584; no cache_path (online HuggingFace loading).
+experiment:
+  esm_mode: frozen
+  tag: trifusion_efficient_esm2t6_d384
+ligand:
+  type: chemberta
+  models:
+  - ChemBERTa
+  model_name: DeepChem/ChemBERTa-77M-MTR
+  mode: frozen
+  pool: cls
+  max_len: 512
+  out_dim: 384
+  proj_cfg:
+    type: identity
+  dtype: bfloat16
+  hf_cache_dir: null
+  cache_in_memory: true
+protein:
+  type: esm2
+  model_name: facebook/esm2_t6_8M_UR50D
+  hidden_size: 320
+  pool: max
+  max_len: 2048
+  out_dim: 320
+  proj_cfg:
+    type: identity
+  dtype: bfloat16
+  hf_cache_dir: null
+  cache_in_memory: true
+plitext:
+  enabled: true
+  type: onion_graph
+  train_mode: e2e
+  features_path: features_residue/residue_N60.npz
+  scaler_path: features_residue/residue_N60_scaler.npz
+  out_dim: 512
+  n_pairs: 168
+  n_shells: 60
+  backbone_type: gt
+  gnn_type: GAT_GCN
+  hidden_dim: 192
+  n_layers: 3
+  k_neighbors: 3
+  n_heads: 4
+  lstm_num_layers: 1
+  use_ffn: true
+  tf_ffn_mult: 2
+  tf_dropout: 0.1
+  struct_fusion: sum
+  pos_encoding: none
+  k_attn: -2
+  pooling: flatten
+  dropout: 0.1
+  proj_dropout: 0.2
+fusion:
+  type: sym_wide_xattn
+  d_attn: 384
+  n_heads: 6
+  attn_dropout: 0.1
+  hidden: 1536
+  mid: 640
+  dropout: 0.3
+training:
+  batch_size_train: 64
+  batch_size_eval: 128
+  lr: 0.0001
+  lr_esm: 0.0001
+  lr_lig: 0.0001
+  lr_struct: 0.0001
+  weight_decay: 0.0001
+  epochs: 200
+  early_stop_patience: 20
+  scheduler:
+    name: reduce_on_plateau
+    mode: min
+    factor: 0.5
+    patience: 5
+    min_lr: 1.0e-06
+    cooldown: 0
+    threshold: 0.0001
+    threshold_mode: rel
+  n_repeats: 5
+  amp_dtype: none
+  num_workers: 0
+  pin_memory: true
+  persistent_workers: false
+  log_interval: 20
+  device: cuda:0
