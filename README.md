@@ -28,7 +28,7 @@ TriFusion/
 
 ## Architecture
 
-![TriFusion architecture](docs/figures/Fig1 TriFusion.png)
+![TriFusion architecture](docs/figures/Fig1_TriFusion.png)
 
 *Overview of TriFusion (from the paper). The structural view builds a shell graph from residue–element contact frequencies (N=60 shells), embeds nodes with a Bi-LSTM, and refines them with a graph-transformer encoder. Protein and ligand views are frozen ProtT5 and ChemBERTa embeddings. A symmetric cross-attention head fuses the three views before an MLP regresses affinity.*
 
