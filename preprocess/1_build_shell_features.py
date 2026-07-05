@@ -1,37 +1,4 @@
-#!/usr/bin/env python3
-"""Preprocessing step 1: build OnionNet-2 residue-atom shell contact features from raw
-PDBbind/CASF/CSAR structures.
-
-This script merges the two original stages:
-  Stage 1 (locate + convert): for each PDB_code, locate the protein .pdb and ligand across
-                              the three data sources, convert the ligand to .pdb, and write
-                              staging/inputs.dat.
-  Stage 2 (feature compute)  : read inputs.dat and compute the 168xN residue-atom shell
-                              contact frequencies with multiprocessing; default N=60
-                              (matches the TriFusion default config), saved to residue_N60.npz.
-
-Feature definition (identical to OnionNet-2 retrain/generate_features.py):
-  * 21 protein residue types x 8 ligand element types = 168 contact pairs (fixed order)
-  * residue-atom minimum distance (nearest distance from a ligand atom to all heavy atoms
-    of the residue, in nm, coordinates x0.1)
-  * the n-th shell = layer-wise difference of the cumulative contact count (dist<=cutoff_n)
-  * onion cutoffs ncutoffs = linspace(0.1, 0.05*(N+1), N)
-  * output vector is shell-major: [168 pairs of shell0, 168 pairs of shell1, ...], length 168*N
-
-Outputs:
-  <out_dir>/residue_N{N}.npz    codes(str[]) + feats(float32 [n, 168*N])
-  <staging>/inputs.dat / _missing.txt / _convfail.txt / _genfail.txt
-
-Example:
-  python 1_build_shell_features.py \
-    --index_csvs /data/PDBbind/PL-2020R1.csv /data/PDBbind/CASF-2016.csv /data/PDBbind/CSAR-HiQ.csv \
-    --pdbbind_index /data/PDBbind/PL-2020R1.csv \
-    --pdbbind_pl_root /data/PDBbindv2020.R1/P-L \
-    --casf_root /data/CASF-2016/coreset \
-    --csar_root /data/CSAR-HiQ \
-    --out_dir ../features_residue --staging ../features_residue/staging \
-    --n_shells 60 --nproc 16
-"""
+"""Preprocessing step 1: build OnionNet-2 residue-atom shell contact features from raw"""
 from __future__ import annotations
 
 import argparse

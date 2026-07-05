@@ -1,8 +1,3 @@
-# TriFusion default (best) configuration
-# Graph-Transformer tower (hidden=192, k=3, flatten, N60, GAT-GCN, L=3)
-#   + ProtT5-XL-U50 + ChemBERTa-77M-MTR + sym_wide_xattn (d_attn=512, 8 heads)
-# 6-set Pearson R = 0.7654
-# No cache_path: PLMs load from HuggingFace online (frozen, no_grad, bf16).
 experiment:
   esm_mode: frozen
   tag: trifusion_prott5_u50_d512

@@ -1,6 +1,3 @@
-#!/usr/bin/env bash
-# Validate the TriFusion training pipeline on all five splits (1 epoch, 1 repeat).
-# Requires: activated trifusion conda env, preprocessed data, and HuggingFace model cache.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

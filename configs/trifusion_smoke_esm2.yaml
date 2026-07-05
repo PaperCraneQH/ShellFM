@@ -1,4 +1,3 @@
-# Smoke-test config: ESM2-t6 + ChemBERTa, 1 epoch / 1 repeat (pipeline validation only)
 experiment:
   esm_mode: frozen
   tag: trifusion_smoke_esm2

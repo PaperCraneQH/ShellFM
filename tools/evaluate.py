@@ -1,28 +1,4 @@
-#!/usr/bin/env python3
-"""Load a trained best checkpoint and evaluate on specified datasets (RMSE / MAE / SD / Pearson r).
-
-Checkpoints are saved by the training scripts under results/<split>_<tag>_lr<lr>/ as
-  <model_name>_<split>_<tag>_<repeat>.pt
-The payload['state_dict'] holds the best-epoch weights (frozen PLM backbone keys omitted;
-load with strict=False).
-
-Datasets are <data_root>/<subdir>/<name>.pt (PDBbindESMDataset), e.g.:
-  external: CASF-2016 / CSAR-HiQ
-  OOD in-fold test: test_random_0 / test_scaffold_0 / ...
-
-Usage:
-  python tools/evaluate.py \
-    --config configs/trifusion_prott5_u50.yaml \
-    --ckpt results/base_trifusion_prott5_u50_d512_lr0.0001/ChemBERTa_base_trifusion_prott5_u50_d512_0.pt \
-    --data_root data_processed_esm \
-    --test_datasets CASF-2016 CSAR-HiQ
-
-  python tools/evaluate.py \
-    --config configs/trifusion_prott5_u50.yaml \
-    --results_dir results/base_trifusion_prott5_u50_d512_lr0.0001 \
-    --data_root data_processed_esm \
-    --test_datasets CASF-2016 --out_csv eval_casf.csv
-"""
+"""Load a trained best checkpoint and evaluate on specified datasets (RMSE / MAE / SD / Pearson r)."""
 from __future__ import annotations
 
 import argparse

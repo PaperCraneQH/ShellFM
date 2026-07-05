@@ -1,25 +1,4 @@
-"""HDF5 cache reader for ESM-2 per-residue features.
-
-Writer script: ``scripts/precompute_esm_features.py``
-Consumer: ``models/protein_esm.py`` ``ProteinESMEncoder`` (frozen mode with cache enabled).
-
-Design notes
-------------
-- Each sequence is stored as an HDF5 group ``/<sha1[:16]>/feat``, shape ``[L_eff, H]``, fp16.
-- ``attention_mask`` is not stored: CLS/EOS/pad are stripped at write time; all rows are valid residues.
-- Multi-worker DataLoader safety:
-    * ``in_memory=False``: lazy per-worker file handles with ``swmr=True`` (h5py handles are not fork-safe).
-    * ``in_memory=True`` (**default**): main process preloads a flat fp16 array + offset dict; forked workers
-      share read-only memory via COW, removing h5py IO from ``lookup_batch`` (typical frozen+cache epoch
-      drops from ~3:40 to under 1 minute). ~3.5 GB cache + 4 workers still uses ~3.5 GB RAM total.
-- String lookup: ``lookup_batch(seqs)`` hashes sequences internally. Missing keys raise ``KeyError``;
-  ``ProteinESMEncoder`` may fall back to online forward or ask the user to refresh precompute.
-
-Process-level singleton
------------------------
-- Multiple ``ESMCache(path, in_memory=True)`` constructions in the same process reuse the same
-  preloaded array (indexed by ``h5_path``), avoiding repeated 3.5 GB loads across backbone runs.
-"""
+"""HDF5 cache reader for ESM-2 per-residue features."""
 from __future__ import annotations
 
 import hashlib

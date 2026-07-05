@@ -1,19 +1,4 @@
-"""Custom DataLoader collate_fn.
-
-PyG's default ``DataLoader`` passes a list of ``Data`` objects to ``Batch.from_data_list``.
-Tensor fields are concatenated along the batch dimension; string-field behavior varies
-across PyG versions and should not be relied on.
-
-This collate_fn explicitly:
-  1. Collects ``seq`` from each ``Data`` into ``List[str]`` (for the protein PLM tokenizer);
-  2. Collects ``smiles`` into ``List[str]`` (for ChemBERTa / pooled-cache lookup);
-  3. Collects ``pdb_code`` into ``List[str]`` (for the optional structure tower);
-  4. Removes those string fields before ``Batch.from_data_list`` so PyG does not try to
-     concatenate strings as tensors.
-
-Returns ``(pyg_batch, seq_list, smiles_list, pdb_code_list)``.
-All consumers (``train_runner.py``, ``tools/evaluate.py``, ``DTAModel.forward``) use this order.
-"""
+"""Custom DataLoader collate_fn."""
 from __future__ import annotations
 
 from typing import List, Tuple

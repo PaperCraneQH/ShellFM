@@ -1,13 +1,4 @@
-"""General training runner invoked by the five split entry scripts.
-
-Design notes
---------
-* Logging layout, CSV/JSON outputs, and checkpoint naming follow the original GraphDTA
-  training scripts for easy comparison with prior baselines.
-* Five split types differ only in dataset names and test sets; ``SplitSpec`` abstracts this.
-* Batches are ``(PyG.Batch, List[str])`` because protein sequences feed the PLM tokenizer.
-* PLM forward uses autocast (bf16 when configured); fusion and structure tower stay fp32.
-"""
+"""General training runner invoked by the five split entry scripts."""
 from __future__ import annotations
 
 import json

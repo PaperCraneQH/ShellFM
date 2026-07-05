@@ -1,18 +1,4 @@
-"""Training entry for the base split: PDBbind v2020 minus CASF-2016, 9:1 train/valid;
-external test on CASF-2016 + CSAR-HiQ.
-
-Usage
-----
-python training/train_base.py --config configs/trifusion_prott5_u50.yaml
-python training/train_base.py --config configs/trifusion_efficient_esm2.yaml --device cuda:1
-
-Shared CLI flags are defined in training/_cli.py:
-  --config       path to the yaml config
-  --data_root    PyG dataset root (default data_processed_esm)
-  --device       override yaml device
-  --models       comma-separated ligand model subset
-  --no_resume    disable auto-resume
-"""
+"""Training entry for the base split: PDBbind v2020 minus CASF-2016, 9:1 train/valid;"""
 from __future__ import annotations
 
 import os

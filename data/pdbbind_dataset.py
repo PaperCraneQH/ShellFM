@@ -1,11 +1,4 @@
-"""PDBbind dataset for PLM-based training.
-
-Key differences from the original GraphDTA TestbedDataset:
-1. Keeps raw amino-acid sequence strings on each PyG ``Data`` object (``data.seq``) instead
-   of fixed-length integer encodings; ligand graphs are still built from SMILES.
-2. Custom collate (``data/collate.py``) batches sequences as string lists for PLM tokenizers.
-3. Default processed root is ``data_processed_esm/``, separate from legacy ``data_processed/``.
-"""
+"""PDBbind dataset for PLM-based training."""
 from __future__ import annotations
 
 import os

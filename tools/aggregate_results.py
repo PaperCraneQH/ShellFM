@@ -1,15 +1,4 @@
-#!/usr/bin/env python3
-"""Aggregate 5-fold result CSVs produced by training into mean +/- std per (split, test set).
-
-Training writes, under results/<split>_<tag>_lr<lr>/:
-  result_<model>_<split>_<tag>.csv   (header: repeat,rmse,mae,sd,r)
-
-Rows with repeat>=0 are per-fold results; avg/std summary rows (if present) are ignored.
-
-Usage:
-  python tools/aggregate_results.py --results_dir results/base_trifusion_prott5_u50_d512_lr0.0001
-  python tools/aggregate_results.py --root results --out_csv summary_all.csv
-"""
+"""Aggregate 5-fold result CSVs produced by training into mean +/- std per (split, test set)."""
 from __future__ import annotations
 
 import argparse

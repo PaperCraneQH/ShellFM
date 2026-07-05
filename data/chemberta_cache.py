@@ -1,25 +1,4 @@
-"""HDF5 cache reader for ChemBERTa ligand SMILES pooled features.
-
-Used only for **frozen ChemBERTa** training. When the backbone is frozen, repeating
-the same forward pass every epoch is wasteful; this cache precomputes a **pooled vector**
-(mean/cls, shape `[hidden]`) per unique SMILES and looks it up by string at train time.
-
-Writer script: ``scripts/precompute_chemberta_features.py``
-Consumer: ``models/ligand_chemberta.py`` (when frozen mode enables cache)
-
-Storage layout
---------------
-- One HDF5 file; each unique SMILES is keyed by the first 16 hex chars of sha1.
-- Each key stores dataset ``emb`` with shape ``[hidden]``, dtype fp16 (pooled vector).
-  Unlike ESMCache per-residue layout, ligand pooled vectors are small enough to store directly.
-- File-level attrs: model_name / hidden / pool / max_len_input / created_at / num_smiles
-
-Concurrency and memory
-----------------------
-- ``in_memory=True`` (default): load all vectors into one ``[N, hidden]`` fp16 array plus
-  ``{hash: row}`` index in the main process; forked DataLoader workers share read-only memory via COW.
-- Process-level singleton: constructing the same path twice in one process loads only once.
-"""
+"""HDF5 cache reader for ChemBERTa ligand SMILES pooled features."""
 from __future__ import annotations
 
 import hashlib

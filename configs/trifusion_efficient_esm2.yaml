@@ -1,5 +1,3 @@
-# TriFusion lightweight configuration (ESM2-t6-8M protein tower)
-# 6-set Pearson R = 0.7584; no cache_path (online HuggingFace loading).
 experiment:
   esm_mode: frozen
   tag: trifusion_efficient_esm2t6_d384

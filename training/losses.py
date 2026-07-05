@@ -1,26 +1,4 @@
-"""Configurable training loss factory.
-
-Integration timeline
----------------------
-2026-05-21: Added a ranking auxiliary loss capability for the ESM2-t33_650M +
-            bio_mb_large baseline; see notes/RANKING_LOSS_INTEGRATION_2026-05-21.md
-            for background. The original `loss_fn = torch.nn.MSELoss()` at
-            train_runner.py:790 was replaced by
-            `loss_fn = make_loss_fn(cfg['training'].get('loss', {}))`.
-
-Supported loss_type
--------------------
-- 'mse_only'        : MSE only (default, fully backward-compatible with legacy yaml behavior)
-- 'mse_with_rank'   : MSE + alpha * margin_ranking_loss (pairwise, hinge)
-
-References
-----------
-- Burges et al. (2005). Learning to rank using gradient descent. ICML.
-- Wang et al. (2025). DeepRLI: A multi-objective framework for universal
-  protein-ligand interaction prediction. Digital Discovery.
-
-Only native PyTorch operators are used; no new dependencies are introduced.
-"""
+"""Configurable training loss factory."""
 from __future__ import annotations
 
 from typing import Callable, Dict, Optional

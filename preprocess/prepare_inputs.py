@@ -1,21 +1,4 @@
-"""Locate raw protein/ligand files and convert ligands to .pdb (vendored from OnionNet-2/baseline).
-
-This module is reused by `1_build_shell_features.py`. For each PDB_code it locates the
-protein `.pdb` and the ligand (`.sdf`/`.mol2`) across three data sources, then converts
-the ligand to `.pdb`.
-
-Difference from the original OnionNet-2 version: **all data root directories are
-parameterized** (via `DataRoots`) instead of being hardcoded to the author's machine,
-so open-source users can configure their own directory layout.
-
-Source priority (first hit wins):
-  1. CASF-2016 :  <casf_root>/<pdb>/<pdb>_{protein.pdb, ligand.sdf|mol2}
-  2. PDBbind   :  <pdbbind_pl_root>/<year>/<pdb>/<pdb>_{protein.pdb, ligand.sdf|mol2}
-  3. CSAR-HiQ  :  <csar_root>/<pdb>/<pdb>_{protein.pdb, ligand.mol2}
-Here <year> is taken from the `file` column of the PDBbind index CSV (e.g. 2020/2019/... buckets).
-
-Dependencies: rdkit (primary ligand conversion) + optional openbabel (obabel, fallback).
-"""
+"""Locate raw protein/ligand files and convert ligands to .pdb (vendored from OnionNet-2/baseline)."""
 from __future__ import annotations
 
 import shutil

@@ -1,22 +1,4 @@
-#!/usr/bin/env python3
-"""Preprocessing step 2: fit the per-feature z-score statistics (mean/std) for residue_N60.
-
-To avoid test-set leakage, the statistics are computed **only on the training pool
-(PL-2020R1, excluding the external test sets CASF-2016 / CSAR-HiQ)**. The result is saved to
-residue_N60_scaler.npz (mean[168*N], std[168*N]) and used by ShellGraphStructEncoder to
-standardize features at train/inference time.
-
-Note: this is a "global training-pool" standardization (shared across all splits), a
-simplified version of per-fold StandardScaler. Its effect on final performance is minor
-(only a per-feature normalization).
-
-Usage:
-  python 2_fit_scaler.py \
-    --npz ../features_residue/residue_N60.npz \
-    --out ../features_residue/residue_N60_scaler.npz \
-    --train_index /data/PDBbind/PL-2020R1.csv \
-    --exclude /data/PDBbind/CASF-2016.csv /data/PDBbind/CSAR-HiQ.csv
-"""
+"""Preprocessing step 2: fit the per-feature z-score statistics (mean/std) for residue_N60."""
 from __future__ import annotations
 
 import argparse

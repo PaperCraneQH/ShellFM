@@ -1,18 +1,4 @@
-#!/usr/bin/env python3
-"""Preprocessing step 3: convert PDBbind split CSVs into PyG `.pt` caches.
-
-Each `.pt` is a PDBbindESMDataset storing ligand molecular graphs plus raw protein
-sequences, SMILES strings, and PDB codes for online PLM encoders and the structural tower.
-
-Output layout: <processed_root>/<split>/<name>.pt
-  e.g. base/train_base_0.pt, external/CASF-2016.pt
-
-Bundled split CSVs live under `data/splits/` by default.
-
-Usage:
-  python preprocess/3_build_pyg_dataset.py --split all \
-    --pdbbind_root data/splits --processed_root data_processed_esm
-"""
+"""Preprocessing step 3: convert PDBbind split CSVs into PyG `.pt` caches."""
 from __future__ import annotations
 
 import argparse

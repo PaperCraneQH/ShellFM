@@ -1,11 +1,3 @@
-#!/usr/bin/env bash
-# Prefetch TriFusion PLM weights into the HuggingFace cache.
-# Training downloads models automatically; this script is for offline prefetch.
-#
-# Usage:
-#   bash scripts/download_plm.sh              # default cache (~/.cache/huggingface)
-#   HF_HOME=/data/hf_cache bash scripts/download_plm.sh
-#   bash scripts/download_plm.sh efficient    # ESM2-t6 + ChemBERTa only
 set -euo pipefail
 
 MODE="${1:-default}"

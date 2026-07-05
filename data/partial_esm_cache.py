@@ -1,20 +1,4 @@
-"""HDF5 cache for ESM-2 intermediate hidden states (partial-cache LoRA training).
-
-Difference from ``data/esm_cache.py``
----------------------------------------
-- ``esm_cache.py`` stores **final-layer** per-residue features (``hidden_states[-1]``) with
-  CLS/EOS removed, for frozen training with mean pooling.
-- ``partial_esm_cache.py`` stores **layer-N** hidden states (``hidden_states[N+1]``) **with
-  CLS/EOS retained**, for LoRA + partial cache: training continues from layer N+1 onward and
-  needs the full attention mask and special-token positions.
-
-Design notes
-------------
-- HDF5 group: ``/<sha1[:16]>/feat``  shape ``[L_total, hidden]``, fp16
-  ``L_total = min(len(seq), max_len-2) + 2``  (includes leading CLS and trailing EOS)
-- File attrs: layer_idx, model_name, hidden, max_len_input, num_sequences
-- Multi-worker sharing: ``in_memory=True`` preloads in the main process; workers share via COW after fork.
-"""
+"""HDF5 cache for ESM-2 intermediate hidden states (partial-cache LoRA training)."""
 from __future__ import annotations
 
 import hashlib

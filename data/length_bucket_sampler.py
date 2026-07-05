@@ -1,28 +1,4 @@
-"""BatchSampler that groups samples by similar protein sequence length.
-
-Motivation
-----------
-PDBbind protein lengths vary widely (mean=551, p99=2412, max=5280). With shuffle=True,
-each batch may mix very short and very long sequences. Tokenizers pad to the longest
-sequence in the batch, so short sequences waste compute on padding tokens.
-
-LengthBucketSampler sorts samples into K mega-buckets; within each epoch buckets are
-shuffled internally and batch order is randomized across buckets, keeping within-batch
-lengths similar and reducing padding overhead to ~5% (roughly 1.3–1.5x ESM speedup).
-
-Design notes
-------------
-1. **Preserves randomness**: bucket order and within-bucket order are re-randomized each epoch.
-2. **drop_last defaults to False**: no samples dropped.
-3. **Default bucket count** K = max(1, ceil(N / (batch_size * 32))).
-4. **Length source**: default ``len(dataset[i].seq)``; optional precomputed ``lengths`` array.
-
-Usage
------
->>> sampler = LengthBucketSampler(dataset, batch_size=96, num_buckets=50, shuffle=True)
->>> loader = DataLoader(dataset, batch_sampler=sampler, collate_fn=esm_collate_fn,
-                        num_workers=4, persistent_workers=True)
-"""
+"""BatchSampler that groups samples by similar protein sequence length."""
 from __future__ import annotations
 
 import math

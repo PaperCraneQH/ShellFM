@@ -1,17 +1,4 @@
-"""HDF5 cache for ChemBERTa (RoBERTa) intermediate hidden states (partial-cache LoRA training).
-
-Mirrors ``data/partial_esm_cache.py``, except:
-- Keys are sha1[:16] of **SMILES** strings (protein side uses sequence strings).
-- Stores layer-N hidden states (``hidden_states[N+1]``, including ``<s>``/``</s>`` tokens)
-  so LoRA training with ``lora.layers=[N+1, ..]`` can resume from layer N output online.
-
-Storage format (same layout as ESM partial cache)
--------------------------------------------------
-- HDF5 group: ``/<sha1(smiles)[:16]>/feat``  shape ``[L_total, hidden]``, fp16
-  ``L_total = valid token count (including leading ``<s>`` and trailing ``</s>``, no pad)``
-- File attrs: layer_idx / model_name / hidden / max_len_input / num_smiles
-- ``in_memory=True``: main-process preload; DataLoader workers share via COW after fork.
-"""
+"""HDF5 cache for ChemBERTa (RoBERTa) intermediate hidden states (partial-cache LoRA training)."""
 from __future__ import annotations
 
 import hashlib
