@@ -9,14 +9,14 @@ TriFusion/
 ├── README.md
 ├── requirements.txt / environment.yml
 ├── configs/
-│   ├── trifusion_prott5_u50.yaml      # default (best accuracy)
-│   └── trifusion_efficient_esm2.yaml  # lightweight ESM2-t6 variant
-├── docs/figures/                      # paper figures (architecture + PLM ablations)
+│   ├── trifusion_prott5_u50.yaml
+│   └── trifusion_efficient_esm2.yaml
+├── docs/figures/
 ├── data/
 │   ├── splits/                        # bundled PDBbind split CSVs (see data/splits/README.md)
 │   ├── pdbbind_dataset.py / collate.py
 │   └── ...
-├── models/                            # encoders, shell-graph GT, SymXAttn fusion, DTAModel
+├── models/
 ├── training/                          # train_runner + five split entry points
 ├── utils.py
 ├── preprocess/                        # shell features → scaler → PyG .pt
@@ -163,20 +163,6 @@ bash scripts/smoke_test_splits.sh
 ```
 
 This runs `train_base`, `train_random`, `train_scaffold`, `train_seq_identity`, and `train_holdout` sequentially. In our smoke test, all five completed with `exit=0` (~3.5 min each on a single GPU).
-
----
-
-## Pre-release checklist
-
-Before publishing or uploading the repository, run:
-
-```bash
-bash scripts/check_sensitive.sh
-```
-
-This scans source and documentation for personal absolute paths, email addresses, phone numbers, and hard-coded secrets. It should exit with code 0.
-
-Also confirm that runtime artifacts are not tracked: `results/`, `data_processed_esm/`, `features_residue/`, checkpoints, logs, and `.env` files (see [.gitignore](.gitignore)).
 
 ---
 
