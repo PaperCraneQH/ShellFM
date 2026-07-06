@@ -1,6 +1,6 @@
 # PDBbind v2020 Data Splits
 
-This directory ships the **metadata and split CSVs** used by TriFusion. Raw protein–ligand structures (PDB/mol2/sdf files) are **not** included; obtain them from [PDBbind](http://www.pdbbind.org.cn/), [CASF-2016](http://www.pdbbind.org.cn/casf.php), and [CSAR-HiQ](http://www.csardock.org).
+This directory ships the **metadata and split CSVs** used by ShellLM. Raw protein–ligand structures (PDB/mol2/sdf files) are **not** included; obtain them from [PDBbind](http://www.pdbbind.org.cn/), [CASF-2016](http://www.pdbbind.org.cn/casf.php), and [CSAR-HiQ](http://www.csardock.org).
 
 ## Layout
 

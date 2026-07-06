@@ -1,6 +1,6 @@
 experiment:
   esm_mode: frozen
-  tag: trifusion_efficient_esm2t6_d384
+  tag: shelllm_efficient_esm2t6_d384
 ligand:
   type: chemberta
   models:

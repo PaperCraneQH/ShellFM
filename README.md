@@ -1,11 +1,11 @@
-# TriFusion
+# ShellLM
 
 Multi-view protein–ligand affinity (PLA) prediction by fusing a **frozen drug language model**, a **frozen protein language model**, and a **trainable radial shell graph** refined by a graph transformer, followed by **symmetric cross-attention** fusion and MLP regression.
 
 ## Project layout
 
 ```
-TriFusion/
+ShellLM/
 ├── README.md
 ├── requirements.txt / environment.yml
 ├── configs/
@@ -28,9 +28,9 @@ TriFusion/
 
 ## Architecture
 
-![TriFusion architecture](docs/figures/Fig1_TriFusion.png)
+![ShellLM architecture](docs/figures/Fig1_TriFusion.png)
 
-*Overview of TriFusion (from the paper). The structural view builds a shell graph from residue–element contact frequencies (N=60 shells), embeds nodes with a Bi-LSTM, and refines them with a graph-transformer encoder. Protein and ligand views are frozen ProtT5 and ChemBERTa embeddings. A symmetric cross-attention head fuses the three views before an MLP regresses affinity.*
+*Overview of ShellLM (from the paper). The structural view builds a shell graph from residue–element contact frequencies (N=60 shells), embeds nodes with a Bi-LSTM, and refines them with a graph-transformer encoder. Protein and ligand views are frozen ProtT5 and ChemBERTa embeddings. A symmetric cross-attention head fuses the three views before an MLP regresses affinity.*
 
 ---
 
@@ -42,7 +42,7 @@ Requires **Python 3.10** and **CUDA 12.1** (adjust PyTorch / PyG wheels for your
 
 ```bash
 conda env create -f environment.yml
-conda activate trifusion
+conda activate shelllm
 ```
 
 **Option B — pip**
@@ -170,14 +170,14 @@ This runs `train_base`, `train_random`, `train_scaffold`, `train_seq_identity`, 
 
 ```bash
 # Summarize 5-fold mean ± std from result CSVs
-python tools/aggregate_results.py --results_dir results/base_trifusion_prott5_u50_d512_lr0.0001
+python tools/aggregate_results.py --results_dir results/base_shelllm_prott5_u50_d512_lr0.0001
 
 python tools/aggregate_results.py --root results --out_csv summary_all.csv
 
 # Re-evaluate best checkpoints on external or OOD test sets
 python tools/evaluate.py \
   --config configs/trifusion_prott5_u50.yaml \
-  --results_dir results/base_trifusion_prott5_u50_d512_lr0.0001 \
+  --results_dir results/base_shelllm_prott5_u50_d512_lr0.0001 \
   --data_root data_processed_esm \
   --test_datasets CASF-2016 CSAR-HiQ
 ```

@@ -1,6 +1,6 @@
 experiment:
   esm_mode: frozen
-  tag: trifusion_smoke_esm2
+  tag: shelllm_smoke_esm2
 ligand:
   type: chemberta
   models:

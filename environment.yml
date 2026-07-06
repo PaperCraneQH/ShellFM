@@ -1,6 +1,6 @@
-# TriFusion conda environment (Python 3.10 / CUDA 12.1)
-# Usage: conda env create -f environment.yml && conda activate trifusion
-name: trifusion
+# ShellLM conda environment (Python 3.10 / CUDA 12.1)
+# Usage: conda env create -f environment.yml && conda activate shelllm
+name: shelllm
 channels:
   - pytorch
   - nvidia
