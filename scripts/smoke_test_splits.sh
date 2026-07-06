@@ -2,8 +2,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 if [[ -z "${CONDA_PREFIX:-}" ]]; then
-  echo "Warning: CONDA_PREFIX is unset. Activate the shelllm env first:" >&2
-  echo "  conda activate shelllm" >&2
+  echo "Warning: CONDA_PREFIX is unset. Activate the shellfm env first:" >&2
+  echo "  conda activate shellfm" >&2
 fi
 
 export LD_LIBRARY_PATH="${CONDA_PREFIX:+$CONDA_PREFIX/lib:}${LD_LIBRARY_PATH:-}"

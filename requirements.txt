@@ -1,4 +1,4 @@
-# ShellLM dependencies (validated on Python 3.10 / CUDA 12.1)
+# ShellFM dependencies (validated on Python 3.10 / CUDA 12.1)
 # 1) Install PyTorch for your CUDA version, e.g. cu121:
 #      pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
 #        --index-url https://download.pytorch.org/whl/cu121

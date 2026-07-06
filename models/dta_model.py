@@ -184,7 +184,7 @@ def build_model(config: dict, ligand_model_name: str) -> DTAModel:
     if lig_type == 'chemberta':
         lig_enc = _build_ligand_chemberta(lig_cfg)
     else:
-        raise ValueError(f"Unknown ligand.type={lig_type!r}; ShellLM supports 'chemberta' only.")
+        raise ValueError(f"Unknown ligand.type={lig_type!r}; ShellFM supports 'chemberta' only.")
 
     prot_type = str(prot_cfg.get('type', 'esm2')).lower()
     if prot_type == 'esm2':
@@ -192,7 +192,7 @@ def build_model(config: dict, ligand_model_name: str) -> DTAModel:
     elif prot_type == 'prott5':
         prot_enc = _build_protein_prott5(prot_cfg)
     else:
-        raise ValueError(f"Unknown protein.type={prot_type!r}; ShellLM supports 'esm2' and 'prott5'.")
+        raise ValueError(f"Unknown protein.type={prot_type!r}; ShellFM supports 'esm2' and 'prott5'.")
 
     pli_cfg = config.get('plitext') or {}
     plitext_enc = None

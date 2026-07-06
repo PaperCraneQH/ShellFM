@@ -1,6 +1,6 @@
 experiment:
   esm_mode: frozen
-  tag: shelllm_prott5_u50_d512
+  tag: shellfm_prott5_u50_d512
 ligand:
   type: chemberta
   models:

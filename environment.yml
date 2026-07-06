@@ -1,6 +1,6 @@
-# ShellLM conda environment (Python 3.10 / CUDA 12.1)
-# Usage: conda env create -f environment.yml && conda activate shelllm
-name: shelllm
+# ShellFM conda environment (Python 3.10 / CUDA 12.1)
+# Usage: conda env create -f environment.yml && conda activate shellfm
+name: shellfm
 channels:
   - pytorch
   - nvidia
