@@ -28,6 +28,8 @@ class Paths:
         self.casf_csv = args.casf_csv or os.path.join(self.pdbbind_root, 'CASF-2016.csv')
         self.csar_seq_smiles = args.csar_seq_smiles or \
             os.path.join(self.pdbbind_root, 'CSAR-HiQ_seq_smiles.csv')
+        self.csar_dedup_csv = args.csar_dedup_csv or \
+            os.path.join(self.pdbbind_root, 'CSAR-HiQ_dedup.csv')
 
 
 def _load_seq_smiles_full(P: Paths) -> pd.DataFrame:
@@ -85,6 +87,26 @@ def build_holdout(P: Paths):
         _make_dataset(P, name, csv, df_seq, subdir='holdout')
 
 
+def _csar_eval_codes(P: Paths, df_s_csar: pd.DataFrame) -> set:
+    """PDB codes for the leakage-free CSAR-HiQ evaluation set (81 complexes)."""
+    n_full = len(df_s_csar)
+    if os.path.isfile(P.csar_dedup_csv):
+        codes = set(pd.read_csv(P.csar_dedup_csv)['PDB_code'])
+        print(f'[CSAR-HiQ] eval codes from {P.csar_dedup_csv}: '
+              f'{len(codes)}/{n_full} complexes (no train overlap)', flush=True)
+        return codes
+    if os.path.isfile(P.train_full):
+        train_codes = set(pd.read_csv(P.train_full, usecols=['PDB_code'])['PDB_code'])
+        overlap = len(set(df_s_csar['PDB_code']) & train_codes)
+        codes = set(df_s_csar['PDB_code']) - train_codes
+        print(f'[CSAR-HiQ] dedup vs {P.train_full}: {len(codes)}/{n_full} complexes '
+              f'({overlap} removed to avoid train leakage)', flush=True)
+        return codes
+    print(f'[warn] neither {P.csar_dedup_csv} nor {P.train_full} found; '
+          f'CSAR not deduplicated — do not use {n_full} complexes for evaluation', flush=True)
+    return set(df_s_csar['PDB_code'])
+
+
 def build_external(P: Paths):
     df_seq_full = _load_seq_smiles_full(P)
     if os.path.isfile(P.casf_csv):
@@ -94,19 +116,14 @@ def build_external(P: Paths):
 
     if os.path.isfile(P.csar_seq_smiles):
         df_s_csar = pd.read_csv(P.csar_seq_smiles)
-        if os.path.isfile(P.train_full):
-            df_train = pd.read_csv(P.train_full, usecols=['PDB_code', '-logKd/Ki'])
-            unique = list(set(df_s_csar['PDB_code']) - set(df_train['PDB_code']))
-            df = df_s_csar[df_s_csar['PDB_code'].isin(unique)]
-        else:
-            print(f'[warn] train csv missing ({P.train_full}); CSAR not deduplicated', flush=True)
-            df = df_s_csar
+        eval_codes = _csar_eval_codes(P, df_s_csar)
+        df = df_s_csar[df_s_csar['PDB_code'].isin(eval_codes)]
         df = df.dropna(subset=['smiles', 'sequence', '-logKd/Ki'])
         new_path = os.path.join(P.processed_root, 'external', 'CSAR-HiQ.pt')
         if os.path.isfile(new_path):
             print(f'[skip] {new_path} already exists.', flush=True)
         else:
-            print(f'[CSAR-HiQ] {len(df)}/{len(df_s_csar)} rows (unique vs train) -> external', flush=True)
+            print(f'[CSAR-HiQ] writing {len(df)} eval complexes -> external/CSAR-HiQ.pt', flush=True)
             PDBbindESMDataset(root=P.processed_root, dataset='CSAR-HiQ', subdir='external',
                               xd=list(df['smiles']), xt=list(df['sequence']),
                               y=list(df['-logKd/Ki']),
@@ -130,6 +147,8 @@ def main():
     ap.add_argument('--train_full', default=None)
     ap.add_argument('--casf_csv', default=None)
     ap.add_argument('--csar_seq_smiles', default=None)
+    ap.add_argument('--csar_dedup_csv', default=None,
+                    help='CSAR eval PDB codes (default: CSAR-HiQ_dedup.csv, 81 complexes)')
     args = ap.parse_args()
 
     P = Paths(args)

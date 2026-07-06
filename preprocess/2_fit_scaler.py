@@ -22,7 +22,8 @@ def main() -> int:
     ap.add_argument('--train_index', required=True,
                     help='training-pool index CSV (e.g. PL-2020R1.csv); stats use pool samples minus --exclude')
     ap.add_argument('--exclude', nargs='*', default=[],
-                    help='external test-set CSVs to remove from the training pool (e.g. CASF-2016.csv CSAR-HiQ.csv)')
+                    help='external test-set CSVs to remove from the training pool '
+                         '(e.g. CASF-2016.csv CSAR-HiQ_seq_smiles.csv)')
     args = ap.parse_args()
 
     print(f'loading {args.npz} ...', flush=True)

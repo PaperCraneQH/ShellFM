@@ -101,7 +101,7 @@ class PDBbindESMDataset(InMemoryDataset):
     ``subdir`` controls which subdirectory under ``root`` holds the ``.pt`` file;
     when omitted, it is inferred from the ``dataset`` name:
 
-      - 'CASF-2016' / 'CSAR-HiQ'      ->  external/
+      - 'CASF-2016' (285) / 'CSAR-HiQ' (81, dedup)  ->  external/
       - 'train_base_0' / 'valid_base_*'         ->  base/
       - 'train|valid|test_random_*'             ->  random/
       - 'train|valid|test_scaffold_*'           ->  scaffold/

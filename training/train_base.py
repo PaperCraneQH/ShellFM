@@ -1,4 +1,5 @@
-"""Training entry for the base split: PDBbind v2020 minus CASF-2016, 9:1 train/valid;"""
+"""Training entry for the base split: PDBbind v2020 minus CASF-2016, 9:1 train/valid;
+external test on CASF-2016 (285) and CSAR-HiQ dedup (81; see data/splits/README.md)."""
 from __future__ import annotations
 
 import os

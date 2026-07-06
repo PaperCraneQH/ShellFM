@@ -101,8 +101,10 @@ python preprocess/2_fit_scaler.py \
   --npz features_residue/residue_N60.npz \
   --out features_residue/residue_N60_scaler.npz \
   --train_index data/splits/PL-2020R1.csv \
-  --exclude data/splits/CASF-2016.csv
+  --exclude data/splits/CASF-2016.csv data/splits/CSAR-HiQ_seq_smiles.csv
 ```
+
+External benchmarks are excluded from scaler statistics. CSAR-HiQ is evaluated on **81** deduplicated complexes (`CSAR-HiQ_dedup.csv`), not the full 343 — see [data/splits/README.md](data/splits/README.md).
 
 **Step 3 — PyG dataset**
 

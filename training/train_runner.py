@@ -60,7 +60,7 @@ SPLIT_SPECS: Dict[str, 'SplitSpec'] = {
         name='base',
         train_template='train_{split}_{repeat}',
         valid_template='valid_{split}_{repeat}',
-        # base has no in-fold test; external CASF + CSAR
+        # base has no in-fold test; external CASF (285) + CSAR-HiQ dedup (81, see data/splits/README.md)
         test_specs=[('CASF', 'CASF-2016'), ('CSAR', 'CSAR-HiQ')],
         n_repeats=5,
     ),
